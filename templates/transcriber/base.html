@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard</title>
+  {% load static %}
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Add the improved saved transcripts styles */
+    .saved-transcripts-container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .transcript-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .transcript-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s, box-shadow 0.2s;
+      border-left: 4px solid #4CAF50;
+    }
+
+    /* Other styles from previous saved transcripts UI */
+    /* ... [include all the styles from previous saved transcripts CSS here] ... */
+  </style>
+</head>
+<body class="bg-gray-100">
+  <div class="min-h-screen flex">
+    <!-- Keep existing sidebar unchanged -->
+   <!-- Sidebar -->
+   <aside class="w-64 bg-white shadow-lg">
+    <div class="p-6">
+      <a href="/webapp/" class="text-2xl font-bold text-blue-600">ByteCare</a>
+    </div>
+    <nav class="mt-6">
+      <div class="px-6">
+        <hr class="border-gray-200" />
+      </div>
+      <ul class="mt-6 space-y-2">
+        <li>
+          <a href="javascript:void(0)" onclick="click1()" id="but1" class="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-100 rounded transition">
+            <img src="{% static 'img/dashboard.png' %}" alt="Dashboard" class="w-5 h-5 mr-3" id="img1" />
+            <span id="txt1">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="javascript:void(0)" onclick="click2()" id="but2" class="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-100 rounded transition">
+            <img src="{% static 'img/summary.png' %}" alt="Summary" class="w-5 h-5 mr-3" id="img2" />
+            <span id="txt2">Summary</span>
+          </a>
+        </li>
+        <li>
+          <a href="javascript:void(0)" onclick="click3()" id="but3" class="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-100 rounded transition">
+            <img src="{% static 'img/storage.png' %}" alt="Uploads" class="w-5 h-5 mr-3" id="img3" />
+            <span id="txt3">Upload's</span>
+          </a>
+        </li>
+        <li>
+          <a href="javascript:void(0)" onclick="click4()" id="but4" class="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-100 rounded transition">
+            <img src="{% static 'img/user.png' %}" alt="Account" class="w-5 h-5 mr-3" id="img4" />
+            <span id="txt4">Account</span>
+          </a>
+        </li>
+        <button>
+        <a href="{% url 'custom' %}" onclick="click5()" id="but5" class="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-100 rounded transition"> 
+          <img src="{% static 'img/log-out.png' %}" alt="Log Out" class="w-5 h-5 mr-3" id="img5" />
+          <span id="txt5">Custom Model</span>
+        </a>
+      </button>
+      <button>
+        <a href="{% url '8053' %}" onclick="click5()" id="but5" class="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-100 rounded transition"> 
+          <img src="{% static 'img/log-out.png' %}" alt="Log Out" class="w-5 h-5 mr-3" id="img5" />
+          <span id="txt5">Gesture Recog</span>
+        </a>
+      </button>
+        <li>
+          <a href="/logout/" onclick="click5()" id="but5" class="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-100 rounded transition">
+            <img src="{% static 'img/log-out.png' %}" alt="Log Out" class="w-5 h-5 mr-3" id="img5" />
+            <span id="txt5">Log Out</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col">
+      <!-- Keep existing header unchanged -->
+      <header class="bg-white shadow p-4 flex items-center justify-between">
+        <!-- Existing header content -->
+      </header>
+
+      <!-- Content Sections -->
+      <main class="flex-1 p-6 relative">
+        {% block content %}
+        <!-- Existing content sections (1-4) or default content -->
+        
+        <!-- New Content 5: Saved Transcripts -->
+        <section id="content5" class="hidden">
+          <div class="saved-transcripts-container">
+            <div class="transcript-header">
+              <h1 class="text-2xl font-bold mb-4">Saved Transcripts</h1>
+              <input type="text" class="search-box" placeholder="Search transcripts...">
+            </div>
+      
+            {% if transcripts %}
+            <div class="transcript-grid">
+              {% for transcript in transcripts %}
+              <div class="transcript-card">
+                <!-- Saved transcript card content -->
+              </div>
+              {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">
+              <p>No transcripts saved yet. Start a recording to save your first transcript!</p>
+            </div>
+            {% endif %}
+          </div>
+        </section>
+        {% endblock %}
+      </main>
+      
+    </div>
+  </div>
+
+  <script>
+    // Update click handler to show saved transcripts
+    function click5() {
+      hideAllContents();
+      document.getElementById('content5').classList.remove('hidden');
+      setActiveButton('but5');
+    }
+
+    // Add search functionality
+    document.querySelector('.search-box').addEventListener('input', function(e) {
+      const term = e.target.value.toLowerCase();
+      document.querySelectorAll('.transcript-card').forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = text.includes(term) ? 'block' : 'none';
+      });
+    });
+  </script>
+
+  <!-- Keep existing JavaScript -->
+  <script src="{% static 'js/dashboard.js' %}"></script>
+</body>
+</html>

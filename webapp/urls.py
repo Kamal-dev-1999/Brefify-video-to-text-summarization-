@@ -18,10 +18,11 @@ from webapp.views.action_words import action_words, show_original_transcript
 from .views.permium import *
 from .views.custom_model import *
 from .views.gesture_recog import run_model_8053
+from .views.quiz import open_quiz_app
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', RedirectView.as_view(url='webapp/', permanent=True)),
-    path('webapp/', index, name='index'), 
+    # path('', RedirectView.as_view(url='webapp/', permanent=True)),
+    path('index/', index, name='index'), 
     path("signup/",Signup.as_view(), name='signup'),
     path("login/", Login.as_view(), name='login'),
     path("logout/", logout, name='logout'),
@@ -41,5 +42,6 @@ urlpatterns = [
     path('upgrade/', upgrade_account, name='upgrade'),
     path('upgrade/success/', upgrade_success, name='upgrade_success'),
     path('streamlit/',run_custom_model_streamlit,name="custom"),
-    path('8053/',run_model_8053,name="8053")
+    path('8053/',run_model_8053,name="8053"),
+    path('8054/',open_quiz_app,name="quiz_app")
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

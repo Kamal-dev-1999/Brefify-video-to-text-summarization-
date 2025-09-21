@@ -1,10 +1,10 @@
-function display() {
-    console.log("clicked");
+// function display() {
+//     console.log("clicked");
 
-    document.getElementById("test2").style.display="block";
-}
+//     document.getElementById("test2").style.display="block";
+// }
 
-function band() {
-    console.log("clicked");
-    document.getElementById("test2").style.display="none";
-}
+// function band() {
+//     console.log("clicked");
+//     document.getElementById("test2").style.display="none";
+// }

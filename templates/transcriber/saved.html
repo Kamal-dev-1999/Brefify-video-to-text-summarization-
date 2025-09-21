@@ -1,0 +1,183 @@
+<style>
+    .saved-transcripts-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .transcript-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 10px;
+    }
+
+    .search-box {
+        padding: 0.8rem;
+        width: 300px;
+        border: 1px solid #dee2e6;
+        border-radius: 25px;
+        font-size: 1rem;
+    }
+
+    .transcript-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .transcript-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        transition: transform 0.2s, box-shadow 0.2s;
+        border-left: 4px solid #4CAF50;
+    }
+
+    .transcript-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #eee;
+    }
+
+    .timestamp {
+        font-size: 0.9rem;
+        color: #6c757d;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .timestamp::before {
+        content: '🕒';
+        font-size: 0.8em;
+    }
+
+    .transcript-content {
+        color: #495057;
+        line-height: 1.6;
+        max-height: 200px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .transcript-content.expanded {
+        max-height: none;
+    }
+
+    .read-more {
+        display: block;
+        color: #4CAF50;
+        cursor: pointer;
+        text-align: right;
+        margin-top: 0.5rem;
+        font-weight: 500;
+    }
+
+    .card-actions {
+        margin-top: 1rem;
+        display: flex;
+        gap: 0.5rem;
+        justify-content: flex-end;
+    }
+
+    .action-btn {
+        padding: 0.4rem 0.8rem;
+        border: none;
+        border-radius: 20px;
+        background: #f1f3f5;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .action-btn:hover {
+        background: #e9ecef;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 4rem;
+        color: #6c757d;
+    }
+</style>
+
+<div class="saved-transcripts-container">
+    <div class="transcript-header">
+        <h1>Saved Transcripts</h1>
+        <input type="text" class="search-box" placeholder="Search transcripts...">
+    </div>
+
+    {% if transcripts %}
+    <div class="transcript-grid">
+        {% for transcript in transcripts %}
+        <div class="transcript-card">
+            <div class="card-header">
+                <div class="timestamp">
+                    <span class="date">{{ transcript.created_at|date:"M d, Y" }}</span>
+                    <span class="time">{{ transcript.created_at|time:"H:i" }}</span>
+                </div>
+            </div>
+            <div class="transcript-content">
+                {{ transcript.content|truncatewords:30 }}
+            </div>
+            {% if transcript.content|wordcount > 30 %}
+            <span class="read-more">Read more</span>
+            {% endif %}
+            <div class="card-actions">
+                <button class="action-btn">📋 Copy</button>
+                <button class="action-btn">📥 Export</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <p>No transcripts saved yet. Start a recording to save your first transcript!</p>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+    // Read more/less functionality
+    document.querySelectorAll('.read-more').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const content = e.target.previousElementSibling;
+            content.classList.toggle('expanded');
+            e.target.textContent = content.classList.contains('expanded') ? 'Read less' : 'Read more';
+        });
+    });
+
+    // Search functionality
+    const searchBox = document.querySelector('.search-box');
+    searchBox.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+        document.querySelectorAll('.transcript-card').forEach(card => {
+            const text = card.querySelector('.transcript-content').textContent.toLowerCase();
+            card.style.display = text.includes(searchTerm) ? 'block' : 'none';
+        });
+    });
+
+    // Copy to clipboard
+    document.querySelectorAll('.action-btn').forEach(button => {
+        if (button.textContent.includes('Copy')) {
+            button.addEventListener('click', (e) => {
+                const content = e.target.closest('.transcript-card').querySelector('.transcript-content').textContent;
+                navigator.clipboard.writeText(content);
+                button.textContent = 'Copied!';
+                setTimeout(() => button.textContent = '📋 Copy', 2000);
+            });
+        }
+    });
+</script>

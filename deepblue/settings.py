@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'webapp',
-    # 'custom_model'
+    'transcriber',
 ]
 
 MIDDLEWARE = [
@@ -52,8 +52,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'webapp.urls'
-
+# ROOT_URLCONF = 'webapp.urls'
+ROOT_URLCONF = 'deepblue.urls'  # Should point to project's urls.py
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -83,7 +83,7 @@ DATABASES = {
 		'NAME': 'edtech',
 		'USER': 'root',
 		'PASSWORD': 'Kamal1395',
-		'HOST':'localhost',
+		'HOST':'127.0.0.1',
 		'PORT':'3306',
 	}
 }

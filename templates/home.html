@@ -18,20 +18,23 @@
 <body>
     <div class="home" id="home"></div>
     <nav class="nav">
-        <div class="logo"><a href="#home">DeepBlue</a></div>
+        <div class="logo"><a href="#home">CareChainAi</a></div>
         <div class="content">
             <div class="items item1"><a href="/webapp/"> Home </a></div>
             <div class="items item2"><a href="javascript:void(0)"> About Us </a></div>
-            <div class="items item3"><a href="/dashboard/"> Services </a></div>
+            <div class="items item3"><a href=""> Services </a></div>
+            {% comment %} <div class="items item3">
+                <a href="{% url 'transcription:live_transcription' %}"> Live </a>
+            </div> {% endcomment %}
         </div>
 
 
 
-        <div class="test" id="test" onclick="display()">
+        {% comment %} <div class="test" id="test" onclick="display()">
             <img src="{% static 'img/chat.png' %}" style="height: 50px;">
-          </div>
+          </div> {% endcomment %}
       
-          <div class="chat-bar-collapsible" id="test2">
+          {% comment %} <div class="chat-bar-collapsible" id="test2">
             <button id="chat-button"  class="collapsible">Chat with us!
                
                 <!-- <a id="close" onclick="close()"> <img src="img/close.png" style="height: 20px;"> </a> -->
@@ -76,7 +79,7 @@
                 </div>
             </div>
       
-        </div>
+        </div> {% endcomment %}
 
 
 
@@ -110,7 +113,7 @@
         <div class="head">
             <div class="h1">Turn your conversations into actionable insights</div>
             <div class="h2">
-                Do you spend 5+ hours a week in meetings & it's hard to remember key points? No worries, Deep Blue helps you summarize your calls & get key insights.
+                Do you spend 5+ hours a week in meetings & it's hard to remember key points? No worries, CareChainAi helps you summarize your calls & get key insights.
             </div>
             <div class="try"><a href="/dashboard/">Try Now </a></div>
         </div>
@@ -121,13 +124,13 @@
     </div>
 
     <div class="why">
-        <a> Why Deep Blue? </a>
+        <a> Why CareChainAi? </a>
     </div>
 
     <div class="butdiv">
         <div class="but">
             <a href="javascript:void(0)">
-                <div class="button1" id="but1" onclick="click2()">Deep Blue</div>
+                <div class="button1" id="but1" onclick="click2()">CareChainAi</div>
             </a>
             <div class="line"></div>
             <a href="javascript:void(0)">
@@ -140,7 +143,7 @@
         <div class="area" id="area1">
             <div class="left">
                 <a>
-          Deep Blue summarizes meetings into key takeaways and an intelligence
+          CareChainAi summarizes meetings into key takeaways and an intelligence
           dashboard
         </a>
             </div>
@@ -185,7 +188,7 @@
     </div>
 
     <div class="compatible">
-        <div class="cup"><a> Deep Blue is open for Expansion !</a></div>
+        <div class="cup"><a>  CareChainAi is open for Expansion !</a></div>
         <div class="cdown">
             <div class="section1">
                 <div class="upper"></div>
@@ -249,7 +252,7 @@
     </div>
 
     <div class="footer">
-        <div class="logoend">Deep Blue</div>
+        <div class="logoend">CareChainAi</div>
         <ul>
             <!-- <li>
         <a href="javascript:void(0)"> Home</a>

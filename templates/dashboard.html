@@ -5,16 +5,26 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   {% load static %}
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
+<style>
+  .group.active .submenu {
+    max-height: 10rem;
+  }
+
+  .group.active .chevron {
+    transform: rotate(180deg);
+  }
+</style>
 <body class="bg-gray-100">
   <div class="min-h-screen flex">
     <!-- Sidebar -->
     <aside class="w-64 bg-white shadow-lg">
       <div class="p-6">
-        <a href="/webapp/" class="text-2xl font-bold text-blue-600">ByteCare</a>
+        <a href="/index/" class="text-2xl font-bold text-blue-600">CareChainAi</a>
       </div>
       <nav class="mt-6">
         <div class="px-6">
@@ -27,10 +37,33 @@
               <span id="txt1">Dashboard</span>
             </a>
           </li>
+          <!-- Gesture Recognition Button -->
+{% comment %} <a href="{% url '8053' %}" class="inline-block">
+  <button onclick="click5()" id="gesture-btn" class="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-100 rounded transition w-full">
+    <i class="fas fa-hand-pointer text-gray-600 mr-3" style="width: 1.25rem; height: 1.25rem;"></i>
+    <span id="gesture-text">Gesture Recog</span>
+  </button>
+</a> {% endcomment %}
+
+<!-- Custom Model Button -->
+ 
+{% comment %} <a href="{% url 'custom' %}" class="inline-block">
+  <button onclick="click5()" id="custom-model-btn" class="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-100 rounded transition w-full">
+    <i class="fas fa-robot text-gray-600 mr-3" style="width: 1.25rem; height: 1.25rem;"></i>
+    <span id="custom-model-text">Custom Model</span>
+  </button> {% endcomment %}
+{% comment %} </a> {% endcomment %}
+<li class="group">
+  <!-- History Parent Item -->
+  <a href="javascript:void(0)" onclick="toggleHistory()" class="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-100 rounded transition">
+    <i class="fas fa-history text-gray-600 mr-3" style="width: 1.25rem; height: 1.25rem;"></i>
+    <span>History</span>
+    <i class="fas fa-chevron-down ml-auto text-sm transition-transform duration-200 chevron"></i>
+  </a><ul class="submenu pl-8 overflow-hidden max-h-0 transition-all duration-300">
           <li>
             <a href="javascript:void(0)" onclick="click2()" id="but2" class="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-100 rounded transition">
               <img src="{% static 'img/summary.png' %}" alt="Summary" class="w-5 h-5 mr-3" id="img2" />
-              <span id="txt2">Summary</span>
+              <span id="txt2">Summaries</span>
             </a>
           </li>
           <li>
@@ -39,24 +72,29 @@
               <span id="txt3">Upload's</span>
             </a>
           </li>
+          
+        </ul>
+      </li><script>
+        function toggleHistory() {
+          const historyGroup = document.querySelector('li.group');
+          historyGroup.classList.toggle('active');
+        }
+      </script>
+      {% comment %} <li>
+        <a href="{% url 'quiz_app' %}" onclick="click2()" id="but2" class="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-100 rounded transition">
+          <i class="fa-solid fa-hands-asl-interpreting w-5 h-5 mr-3"></i>
+          <span id="txt2">Learn Sign Lang</span>
+        </a>
+      </li> {% endcomment %}
+          
           <li>
             <a href="javascript:void(0)" onclick="click4()" id="but4" class="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-100 rounded transition">
               <img src="{% static 'img/user.png' %}" alt="Account" class="w-5 h-5 mr-3" id="img4" />
-              <span id="txt4">Account</span>
+              <span id="txt4">Profile Management</span>
             </a>
           </li>
-          <button>
-          <a href="{% url 'custom' %}" onclick="click5()" id="but5" class="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-100 rounded transition"> 
-            <img src="{% static 'img/log-out.png' %}" alt="Log Out" class="w-5 h-5 mr-3" id="img5" />
-            <span id="txt5">Custom Model</span>
-          </a>
-        </button>
-        <button>
-          <a href="{% url '8053' %}" onclick="click5()" id="but5" class="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-100 rounded transition"> 
-            <img src="{% static 'img/log-out.png' %}" alt="Log Out" class="w-5 h-5 mr-3" id="img5" />
-            <span id="txt5">Gesture Recog</span>
-          </a>
-        </button>
+          
+          {% comment %} <script src="{% static 'js/live-transcribe.js' %}"></script> {% endcomment %}
           <li>
             <a href="/logout/" onclick="click5()" id="but5" class="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-100 rounded transition">
               <img src="{% static 'img/log-out.png' %}" alt="Log Out" class="w-5 h-5 mr-3" id="img5" />
@@ -82,10 +120,10 @@
             <span class="badge {% if user.userprofile.is_premium %}badge-premium{% else %}badge-basic{% endif %} hidden"></span>
           {% endif %}
         </div>
-        <div class="flex items-center space-x-4">
-          <a href="javascript:void(0)" onclick="click2()" id="second" class="hover:text-blue-600">Summary</a>
-          <a href="javascript:void(0)" onclick="click3()" id="third" class="hover:text-blue-600">Upload's</a>
-          <a href="javascript:void(0)" onclick="click4()" id="fourth" class="hover:text-blue-600">Account</a>
+         <div class="flex items-center space-x-4">
+          <a href="javascript:void(0)" onclick="click2()" id="second" class="hover:text-blue-600"></a>
+          <a href="javascript:void(0)" onclick="click3()" id="third" class="hover:text-blue-600"></a>
+          <a href="javascript:void(0)" onclick="click4()" id="fourth" class="hover:text-blue-600"></a>
           <a href="#" id="fifth" class="hover:text-blue-600"></a>
           <a href="javascript:void(0)" onclick="click4()">
             <img src="{% static 'img/profile pic.png' %}" alt="Profile" class="w-10 h-10 rounded-full border-2 border-blue-500" />
@@ -332,6 +370,6 @@
       </main>
     </div>
   </div>
-  <script src="{% static 'js/dashboard.js' %}"></script>
+  {% comment %} <script src="{% static 'js/dashboard.js' %}"></script> {% endcomment %}
 </body>
 </html>
